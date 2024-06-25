@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:mainline-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - ./certs:/root/certs
+      - ./nginx_conf:/etc/nginx/conf.d:ro
+      - ./pi:/var/www/html/pi
+    networks:
+      - khon_lazyblacksmith 
+
+networks:
+  khon_lazyblacksmith:
+    external: true
+
