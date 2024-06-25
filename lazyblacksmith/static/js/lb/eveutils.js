@@ -126,7 +126,7 @@ var eveUtils = (function(utils) {
      */
     var calculateResearchInstallationCost = function(baseCost, systemCostIndex, level, tax) {
         var levelModifier = (250 * Math.pow(2, (1.25 * level - 2.5))) / 105;
-        return baseCost * systemCostIndex * 0.02 * levelModifier * tax;
+        return baseCost * (systemCostIndex + .04) * 0.02 * levelModifier;
     }
 
     /**
@@ -170,7 +170,9 @@ var eveUtils = (function(utils) {
      * @return the copy cost
      */
     var calculateCopyInstallationCost = function(baseCost, systemCostIndex, runs, runPerCopy, tax) {
-        return baseCost * systemCostIndex * 0.02 * runs * runPerCopy * tax;
+        return baseCost * (systemCostIndex + .04) * 0.02 * runs * runPerCopy
+        /**return baseCost * systemCostIndex * 0.02 * runs * runPerCopy
+         * * tax;*/
     }
 
     /**
@@ -219,7 +221,8 @@ var eveUtils = (function(utils) {
      * @return the invention cost
      */
     var calculateInventionCost = function(baseCost, systemCostIndex, runs, tax) {
-        return baseCost * systemCostIndex * runs * 0.02 * tax;
+        return baseCost * (systemCostIndex + .04) * runs * 0.02;
+        /**return baseCost * systemCostIndex * runs * 0.02 * tax;*/
     }
 
 

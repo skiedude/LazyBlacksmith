@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  nginx:
+    image: nginx:mainline-alpine
+    ports:
+      - "80"
+      - "443"
+    restart: always
+    env_file:
+      - ./.env
+    depends_on:
+      - uwsgi
+    volumes:
+      - static:/static
+      - ./nginx_config:/etc/nginx/conf.d:ro
+    networks:
+      - lazyblacksmith 
   postgres:
     image: postgres:14
     hostname: postgres
@@ -39,7 +54,7 @@ services:
       CELERY_BROKER: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
       DB_URI: postgresql://lazyblacksmith:${POSTGRES_PASSWORD:-lazyblacksmith}@postgres/lazyblacksmith
-      SECRET_KEY: ${SECRET_KEY?SECRET_KEY must be set in your .env file}
+      SECRET_KEY: ${SECRET_KEY-}
       ESI_SECRET_KEY: ${ESI_SECRET_KEY-}
       ESI_CLIENT_ID: ${ESI_CLIENT_ID-}
       ESI_REDIRECT_DOMAIN: ${ESI_REDIRECT_DOMAIN-}
@@ -62,7 +77,7 @@ services:
     volumes:
       - static:/static
     ports:
-      - "${PORT:-9090}:9090"
+      - "9090:9090"
     networks:
       - lazyblacksmith
     depends_on:

@@ -20,7 +20,7 @@ RUN mkdir -p /static \
 FROM python:3.9-slim as py-builder
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends build-essential gcc libpq-dev libmariadb-dev
+    apt-get install -y --no-install-recommends --allow-unauthenticated build-essential gcc libpq-dev libmariadb-dev
 
 RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
@@ -59,7 +59,7 @@ ENV PATH="/venv/bin:/lb/deploy:$PATH" \
 EXPOSE 9090
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libpq-dev libmariadb-dev \
+    && apt-get install -y --no-install-recommends --allow-unauthenticated libpq-dev libmariadb-dev \
     && groupadd -g 1001 lb \
     && useradd -M -s /bin/false -u 1001 -g lb -d /lb lb
 

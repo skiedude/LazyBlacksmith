@@ -10,8 +10,8 @@
     "js-main": "npm-run-all js-concat js-minify",
     "js-concat": "shx cat lazyblacksmith/static/js/misc/{font-awesome,humanize,nouislider,popper,typeahead.bundle,utils}.js lazyblacksmith/static/bootstrap/js/bootstrap.js lazyblacksmith/static/js/jquery/*.js lazyblacksmith/static/js/lb/*.js lazyblacksmith/static/js/lb/*/*.js > lazyblacksmith/static/js/lb.js",
     "js-minify": "uglifyjs --compress typeofs=false --mangle --comments \"/^!/\" --source-map \"includeSources,url=lb.min.js.map\" --output lazyblacksmith/static/js/lb.min.js lazyblacksmith/static/js/lb.js",
-    "dist": "npm-run-all --parallel js-main css-main",
-    "watch": "npm-run-all --parallel watch-*",
+    "dist": "npm-run-all --sequential js-main css-main",
+    "watch": "npm-run-all --sequential watch-*",
     "watch-css-main": "nodemon --watch lazyblacksmith/static/scss/ --ext scss --exec \"npm run css-main\"",
     "watch-js-main": "nodemon --watch lazyblacksmith/static/js/ --ext js --exec \"npm run js-main\""
   },
